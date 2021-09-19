@@ -1,0 +1,32 @@
+﻿@model bilijar.ViewModels.NewReservationViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Reservation</h2>
+
+@using (Html.BeginForm("Save", "Reservations"))
+{
+    @Html.HiddenFor(m => m.Reservation.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Reservation.Name)
+        @Html.TextBoxFor(m => m.Reservation.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Reservation.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Reservation.ReservationDate)
+        @Html.TextBoxFor(m => m.Reservation.ReservationDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Reservation.ReservationDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Reservation.TableTypeId)
+        @Html.DropDownListFor(m => m.Reservation.TableTypeId, new SelectList(Model.TableTypes, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Reservation.TableTypeId)
+    </div>
+
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

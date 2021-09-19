@@ -1,0 +1,58 @@
+﻿@model IEnumerable<bilijar.Models.Reservation>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Reservations</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any reservations yet.</p>
+}
+else
+{
+    <table id="reservations" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Reservations</th>
+            <th>Table Type</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var reservation in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(reservation.Name, "Edit", "Reservations", new { id = reservation.Id }, null)</td>
+                <td>@reservation.TableType.Name</td>
+                <td>
+                    <button data-reservation-id="@reservation.Id" class="btn-link js-delete">Delete</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#reservations .js-delete").on("click",
+                function () {
+                    var button = $(this);
+                    if (confirm("Delete this reservation?")) {
+                        $.ajax(
+                            {
+                                url: "/api/reservations/" + button.attr("data-reservation-id"),
+                                method: "DELETE",
+                                success: function () {
+                                    
+                                    button.parents("tr").remove();
+                                }
+                            });
+                    }
+
+                });
+        });
+    </script>
+}
+
