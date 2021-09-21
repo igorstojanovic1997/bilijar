@@ -5,6 +5,7 @@ using System.Web;
 using AutoMapper;
 using bilijar.Dtos;
 using bilijar.Models;
+using bilijar.ViewModels;
 
 namespace bilijar.App_Start
 {
@@ -14,6 +15,7 @@ namespace bilijar.App_Start
         {
             Mapper.CreateMap<Reservation, ReservationDto>();
             Mapper.CreateMap<ReservationDto, Reservation>();
+            Mapper.CreateMap<Reservation, NewReservationViewModel>().ReverseMap();
         }
     }
 }

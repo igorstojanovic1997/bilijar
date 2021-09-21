@@ -20,6 +20,7 @@ namespace bilijar.Controllers.Api
         {
                 _context = new ApplicationDbContext();
         }
+
         [Authorize(Roles = "CanManageReservations")]
         public IEnumerable<ReservationDto> GetReservations()
         {

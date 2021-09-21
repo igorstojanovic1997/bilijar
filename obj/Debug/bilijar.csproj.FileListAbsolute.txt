@@ -120,5 +120,6 @@ C:\Users\darko\source\repos\bilijar\bilijar\bin\AutoMapper.xml
 C:\Users\darko\source\repos\bilijar\bilijar\bin\System.Net.Http.Formatting.xml
 C:\Users\darko\source\repos\bilijar\bilijar\bin\System.Web.Http.xml
 C:\Users\darko\source\repos\bilijar\bilijar\bin\System.Web.Http.WebHost.xml
-C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.csprojAssemblyReference.cache
 C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.SeedUsers.resources
+C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.AddUserToReservation.resources
+C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.csprojAssemblyReference.cache

@@ -14,6 +14,7 @@ else
         <thead>
         <tr>
             <th>Reservations</th>
+            <th>User</th>
             <th>Table Type</th>
             <th>Delete</th>
         </tr>
@@ -23,6 +24,7 @@ else
         {
             <tr>
                 <td>@Html.ActionLink(reservation.Name, "Edit", "Reservations", new { id = reservation.Id }, null)</td>
+                <td>@reservation.User.Email</td>
                 <td>@reservation.TableType.Name</td>
                 <td>
                     <button data-reservation-id="@reservation.Id" class="btn-link js-delete">Delete</button>

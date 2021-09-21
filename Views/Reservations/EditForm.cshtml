@@ -9,19 +9,63 @@
 @using (Html.BeginForm("Save", "Reservations"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.Name)
-        @Html.TextBoxFor(m => m.Reservation.Name, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.ReservationDate)
-        @Html.TextBoxFor(m => m.Reservation.ReservationDate, new { @class = "form-control" })
+        @Html.LabelFor(i => i.ReservationDate)
+        <div class="row">
+            <div class='col-sm-6'>
+                <input class="form-control datetimepicker2" data-val="true" data-val-date="The field ReservationDate must be a date."
+                       id="ReservationDate" name="ReservationDate" type="text"
+                       aria-describedby="ReservationDate-error" aria-invalid="false">
+            </div>
+        </div>
+        @Html.ValidationMessageFor(i => i.ReservationDate)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.TableTypeId)
-        @Html.DropDownListFor(m => m.Reservation.TableTypeId, new SelectList(Model.TableTypes, "Id", "Name"),  new { @class = "form-control" } )
+        @Html.LabelFor(m => m.TableTypeId)
+        @Html.DropDownListFor(m => m.TableTypeId, new SelectList(Model.TableTypes, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TableTypeId)
     </div>
-    @Html.HiddenFor(m=>m.Reservation.Id)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.UserId)
     @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="submit" class="btn btn-primary" id="successful">Save changes</button>
 }
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                var date = moment("@Model.ReservationDate.Value.ToString()", "DD.MM.YYYY HH:mm").toDate();
+                console.log(date);
+                $('.datetimepicker2').datetimepicker({
+                    defaultDate: date,
+                    enabledHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+                    daysOfWeekDisabled: [0, 6],
+                    format: "DD.MMMM.YYYY.  HH:00:00"
+                });
+            });
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#successful").click(function () {
+
+                toastr.success("Saved successfully", "Saved");
+            });
+
+        });
+    </script>
+}
+            
 

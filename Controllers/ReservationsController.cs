@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using bilijar.Models;
 using System.Data.Entity;
+using AutoMapper;
 using bilijar.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace bilijar.Controllers
 {
@@ -28,8 +30,7 @@ namespace bilijar.Controllers
             var tabletypes = _context.TableTypes.ToList();
             var viewmodel = new NewReservationViewModel
             {
-                TableTypes = tabletypes,
-                Reservation = new Reservation()
+                TableTypes = tabletypes
             };
             return View(viewmodel);
         }
@@ -42,16 +43,17 @@ namespace bilijar.Controllers
             {
                 var viewmodel = new NewReservationViewModel
                 {
-                    Reservation = reservationVm.Reservation,
                     TableTypes = _context.TableTypes.ToList()
                 };
                 return View("New", viewmodel);
 
             }
 
-            var reservation = reservationVm.Reservation;
+            var reservation = Mapper.Map<NewReservationViewModel, Reservation>(reservationVm);
 
-            if(reservation.Id == 0)
+            reservation.UserId = string.IsNullOrWhiteSpace(reservationVm.UserId) ? User.Identity.GetUserId() : reservationVm.UserId;
+
+            if (reservation.Id == 0)
                 _context.Reservations.Add(reservation);
             else
             {
@@ -71,14 +73,13 @@ namespace bilijar.Controllers
         public ActionResult Edit(int id)
         {
             var reservation = _context.Reservations.SingleOrDefault(c => c.Id == id);
+
             if (reservation == null)
                 return HttpNotFound();
-            var viewmodel = new NewReservationViewModel
-            {
-                Reservation = reservation,
-                TableTypes = _context.TableTypes.ToList()
 
-            };
+            var viewmodel = Mapper.Map<Reservation, NewReservationViewModel>(reservation);
+
+            viewmodel.TableTypes = _context.TableTypes.ToList();
             return View("EditForm", viewmodel);
         }
 
@@ -86,10 +87,11 @@ namespace bilijar.Controllers
         [Authorize(Roles = "CanManageReservations")]
         public ViewResult Index()
         {
-            var reservations = _context.Reservations.Include(c=>c.TableType).ToList();
+            var reservations = _context.Reservations.Include(c=>c.TableType).Include(t => t.User).ToList();
 
             return View(reservations);
         }
+
         [Authorize(Roles = "CanManageReservations")]
         public ActionResult Details(int id)
         {

@@ -21,9 +21,9 @@ namespace bilijar.Models
         public TableType TableType { get; set; }
 
 
-        //public ApplicationUser User { get; set; }
-        
-        //public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+
+        public string UserId { get; set; }
 
         [Required]
         [Display(Name ="Choose Date")]
