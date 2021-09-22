@@ -87,9 +87,8 @@ namespace bilijar.Controllers
         [Authorize(Roles = "CanManageReservations")]
         public ViewResult Index()
         {
-            var reservations = _context.Reservations.Include(c=>c.TableType).Include(t => t.User).ToList();
 
-            return View(reservations);
+            return View();
         }
 
         [Authorize(Roles = "CanManageReservations")]

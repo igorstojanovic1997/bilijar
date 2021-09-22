@@ -11,14 +11,11 @@ namespace bilijar.Dtos
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(255)]
         public string Name { get; set; }
 
-        [Required]
-        public int TableTypeId { get; set; }
+        public string TableType { get; set; }
 
-        [Required]
         public DateTime? ReservationDate { get; set; }
+        public string UserEmail { get; set; }
     }
 }

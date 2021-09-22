@@ -4,56 +4,80 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Reservations</h2>
-@if (!Model.Any())
-{
-    <p>We don't have any reservations yet.</p>
-}
-else
-{
-    <table id="reservations" class="table table-bordered table-hover">
-        <thead>
+<table id="reservations" class="table table-bordered table-hover">
+    <thead>
         <tr>
+            <th>Id</th>
             <th>Reservations</th>
             <th>User</th>
             <th>Table Type</th>
             <th>Delete</th>
         </tr>
-        </thead>
-        <tbody>
-        @foreach (var reservation in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(reservation.Name, "Edit", "Reservations", new { id = reservation.Id }, null)</td>
-                <td>@reservation.User.Email</td>
-                <td>@reservation.TableType.Name</td>
-                <td>
-                    <button data-reservation-id="@reservation.Id" class="btn-link js-delete">Delete</button>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
+    </thead>
+    <tbody></tbody>
+</table>
 @section scripts
 {
+    <script src="~/signalr/hubs"></script>
     <script>
-        $(document).ready(function() {
-            $("#reservations .js-delete").on("click",
+        $(document).ready(function () {
+
+            var table = $("table#reservations").DataTable({
+                ajax: {
+                    url: "api/reservations",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        visible: false
+                    },
+                    {
+                        data: "Name",
+                        render: function (data, type, reservation) {
+                            return "<a href='/reservations/edit/" + reservation.Id + "'>" + reservation.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "UserEmail"
+                    },
+                    {
+                        data: "TableType"
+                    },
+                    {
+                        data: "Id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-reservation-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#reservations").on("click",
+                ".js-delete",
                 function () {
                     var button = $(this);
                     if (confirm("Delete this reservation?")) {
                         $.ajax(
                             {
-                                url: "/api/reservations/" + button.attr("data-reservation-id"),
+                                url: "api/reservations/" + button.attr("data-reservation-id"),
                                 method: "DELETE",
                                 success: function () {
-                                    
-                                    button.parents("tr").remove();
+                                    table.row(button.parents("tr")).remove().draw();
                                 }
                             });
                     }
 
                 });
+
+            var reservationsHub = $.connection.reservations;
+
+            reservationsHub.client.UpdateRecords = function () {
+                console.log("refresh");
+                $("table#reservations").DataTable().ajax.reload();
+            };
+
+            $.connection.hub.start().done();
         });
     </script>
 }

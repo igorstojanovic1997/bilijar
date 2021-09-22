@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -24,7 +25,8 @@ namespace bilijar.Controllers.Api
         [Authorize(Roles = "CanManageReservations")]
         public IEnumerable<ReservationDto> GetReservations()
         {
-            return _context.Reservations.ToList().Select(Mapper.Map<Reservation, ReservationDto>);
+            var x = _context.Reservations.Include(t => t.User).Include(c => c.TableType).ToList().Select(Mapper.Map<Reservation, ReservationDto>);
+            return _context.Reservations.Include(t => t.User).Include(c => c.TableType).ToList().Select(Mapper.Map<Reservation, ReservationDto>);
         }
 
         //public IEnumerable<ReservationDto> GetReservationsForCurrentUser()

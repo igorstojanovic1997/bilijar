@@ -13,7 +13,10 @@ namespace bilijar.App_Start
     {
         public MappingProfile()
         {
-            Mapper.CreateMap<Reservation, ReservationDto>();
+            Mapper.CreateMap<Reservation, ReservationDto>().
+                ForMember(t => t.UserEmail, 
+                    opt => opt.MapFrom(c => c.User.Email))
+                .ForMember(s => s.TableType, opt => opt.MapFrom(t => t.TableType.Name));
             Mapper.CreateMap<ReservationDto, Reservation>();
             Mapper.CreateMap<Reservation, NewReservationViewModel>().ReverseMap();
         }

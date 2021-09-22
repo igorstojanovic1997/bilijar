@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(bilijar.Startup))]
+[assembly: OwinStartup(typeof(bilijar.Startup))]
 namespace bilijar
 {
     public partial class Startup
@@ -9,6 +9,7 @@ namespace bilijar
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }

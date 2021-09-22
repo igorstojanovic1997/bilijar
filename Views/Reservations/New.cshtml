@@ -6,7 +6,7 @@
 
 <h2>New Reservation</h2>
 
-@using (Html.BeginForm("Save", "Reservations"))
+@using (Html.BeginForm("Save", "Reservations",  new { id = "addform" }))
 {
     @Html.HiddenFor(m => m.Id)
 
@@ -31,21 +31,29 @@
     </div>
 
     @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" id="saveBtn" class="btn btn-primary">Save</button>
 }
 @section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Content/css")
-
+    @Styles.Render("~/Content/css")
+    <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#datetimepicker2').datetimepicker({
                 enabledHours: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                daysOfWeekDisabled: [0,6],
+                daysOfWeekDisabled: [0, 6],
                 format: "DD.MMMM.YYYY.  HH:00:00"
             });
+
+            var reservationsHub = $.connection.reservations;
+
+            $.connection.hub.start().done(function() {
+                $("#saveBtn").click(function () {
+                    $("#addform").submit();
+                    reservationsHub.server.updateReservations();
+                });
+            });
+
+            
         });
     </script>
 }
