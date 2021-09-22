@@ -123,3 +123,9 @@ C:\Users\darko\source\repos\bilijar\bilijar\bin\System.Web.Http.WebHost.xml
 C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.SeedUsers.resources
 C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.AddUserToReservation.resources
 C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.csprojAssemblyReference.cache
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
