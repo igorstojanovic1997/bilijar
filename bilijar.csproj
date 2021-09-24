@@ -246,6 +246,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\TableType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR\ReservationsHub.cs" />
@@ -580,6 +581,7 @@
     <Content Include="Views\Reservations\Details.cshtml" />
     <Content Include="Views\Reservations\New.cshtml" />
     <Content Include="Views\Reservations\EditForm.cshtml" />
+    <Content Include="Views\Reservations\NotAuthorizedList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

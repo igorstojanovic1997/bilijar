@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using bilijar.Models;
 using System.Data.Entity;
+using System.Web.Security;
 using AutoMapper;
 using bilijar.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -53,8 +55,21 @@ namespace bilijar.Controllers
 
             reservation.UserId = string.IsNullOrWhiteSpace(reservationVm.UserId) ? User.Identity.GetUserId() : reservationVm.UserId;
 
+
             if (reservation.Id == 0)
+            {
                 _context.Reservations.Add(reservation);
+
+                if (_context.Reservations.Any(t => t.ReservationDate == reservationVm.ReservationDate))
+                {
+                    ModelState.AddModelError("ReservationDate", "Time and date already taken, choose another.");
+                    var viewmodel = new NewReservationViewModel
+                    {
+                        TableTypes = _context.TableTypes.ToList()
+                    };
+                    return View("New", viewmodel);
+                }
+            }
             else
             {
                 var reservationInDb = _context.Reservations.FirstOrDefault(c => c.Id == reservation.Id);
@@ -65,6 +80,7 @@ namespace bilijar.Controllers
                     reservationInDb.ReservationDate = reservation.ReservationDate;
                     reservationInDb.TableTypeId = reservation.TableTypeId;
                 }
+
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -84,11 +100,13 @@ namespace bilijar.Controllers
         }
 
         // GET: Reservations
-        [Authorize(Roles = "CanManageReservations")]
+        //[Authorize(Roles = "CanManageReservations")]
         public ViewResult Index()
         {
+            if (User.IsInRole(RoleName.CanManageReservations))
+                return View("Index");
+            return View("NotAuthorizedList");
 
-            return View();
         }
 
         [Authorize(Roles = "CanManageReservations")]

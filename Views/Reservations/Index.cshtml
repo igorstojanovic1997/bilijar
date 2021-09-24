@@ -11,6 +11,7 @@
             <th>Reservations</th>
             <th>User</th>
             <th>Table Type</th>
+            <th>Date and time</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -20,12 +21,13 @@
 {
     <script src="~/signalr/hubs"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             var table = $("table#reservations").DataTable({
                 ajax: {
                     url: "api/reservations",
-                    dataSrc: ""
+                    dataSrc: "",
+                    cache: false
                 },
                 columns: [
                     {
@@ -34,7 +36,7 @@
                     },
                     {
                         data: "Name",
-                        render: function (data, type, reservation) {
+                        render: function(data, type, reservation) {
                             return "<a href='/reservations/edit/" + reservation.Id + "'>" + reservation.Name + "</a>";
                         }
                     },
@@ -45,8 +47,11 @@
                         data: "TableType"
                     },
                     {
+                        data: "ReservationDate"
+                    },
+                    {
                         data: "Id",
-                        render: function (data) {
+                        render: function(data) {
                             return "<button class='btn-link js-delete' data-reservation-id=" + data + ">Delete</button>";
                         }
                     }
@@ -55,14 +60,14 @@
 
             $("#reservations").on("click",
                 ".js-delete",
-                function () {
+                function() {
                     var button = $(this);
                     if (confirm("Delete this reservation?")) {
                         $.ajax(
                             {
                                 url: "api/reservations/" + button.attr("data-reservation-id"),
                                 method: "DELETE",
-                                success: function () {
+                                success: function() {
                                     table.row(button.parents("tr")).remove().draw();
                                 }
                             });
@@ -70,11 +75,13 @@
 
                 });
 
+
             var reservationsHub = $.connection.reservations;
 
-            reservationsHub.client.UpdateRecords = function () {
-                console.log("refresh");
-                $("table#reservations").DataTable().ajax.reload();
+            reservationsHub.client.UpdateRecords = function() {
+                setTimeout(function() {
+                    $("table#reservations").DataTable().ajax.reload();
+                }, 1000);
             };
 
             $.connection.hub.start().done();
