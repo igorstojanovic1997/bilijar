@@ -6,7 +6,7 @@
 
 <h2>New Reservation</h2>
 
-@using (Html.BeginForm("Save", "Reservations",  new { id = "addform" }))
+@using (Html.BeginForm("Save", "Reservations"))
 {
     @Html.HiddenFor(m => m.Id)
 

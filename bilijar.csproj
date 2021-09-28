@@ -241,6 +241,14 @@
     <Compile Include="Migrations\202109191525313_AddUserToReservation.Designer.cs">
       <DependentUpon>202109191525313_AddUserToReservation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109281648145_ApplyAnnotationsToReservationProps.cs" />
+    <Compile Include="Migrations\202109281648145_ApplyAnnotationsToReservationProps.Designer.cs">
+      <DependentUpon>202109281648145_ApplyAnnotationsToReservationProps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109281750498_ApplyAnnotationsToNRVM.cs" />
+    <Compile Include="Migrations\202109281750498_ApplyAnnotationsToNRVM.Designer.cs">
+      <DependentUpon>202109281750498_ApplyAnnotationsToNRVM.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -632,6 +640,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109191525313_AddUserToReservation.resx">
       <DependentUpon>202109191525313_AddUserToReservation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109281648145_ApplyAnnotationsToReservationProps.resx">
+      <DependentUpon>202109281648145_ApplyAnnotationsToReservationProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109281750498_ApplyAnnotationsToNRVM.resx">
+      <DependentUpon>202109281750498_ApplyAnnotationsToNRVM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

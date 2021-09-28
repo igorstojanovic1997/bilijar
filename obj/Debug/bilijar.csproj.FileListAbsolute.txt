@@ -129,3 +129,5 @@ C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.Core.pd
 C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
 C:\Users\darko\source\repos\bilijar\bilijar\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.ApplyAnnotationsToReservationProps.resources
+C:\Users\darko\source\repos\bilijar\bilijar\obj\Debug\bilijar.Migrations.ApplyAnnotationsToNRVM.resources
