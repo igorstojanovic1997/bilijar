@@ -6,7 +6,7 @@
 
 <h2>New Reservation</h2>
 
-@using (Html.BeginForm("Save", "Reservations"))
+@using (Html.BeginForm("Save", "Reservations",new { id = "addform" }))
 {
     @Html.HiddenFor(m => m.Id)
 
@@ -54,6 +54,15 @@
             });
 
             
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#saveBtn").click(function () {
+
+                toastr.success("Saved successfully", "Saved");
+            });
+
         });
     </script>
 }

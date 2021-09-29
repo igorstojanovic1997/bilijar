@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using bilijar.Models;
 using System.Data.Entity;
+using System.Threading;
 using System.Web.Security;
 using AutoMapper;
 using bilijar.ViewModels;
@@ -83,6 +84,9 @@ namespace bilijar.Controllers
 
             }
             _context.SaveChanges();
+            Thread.Sleep(2000);
+            if (User.IsInRole("CanManageReservations"))
+                return RedirectToAction("Index", "Reservations");
             return RedirectToAction("Index", "Home");
         }
         [Authorize(Roles = "CanManageReservations")]
